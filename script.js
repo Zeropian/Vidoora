@@ -55,3 +55,60 @@ document.addEventListener('keydown', (e) => {
     closeSidebar();
   }
 });
+
+// ===== CREATE BUTTON FUNCTIONALITY =====
+const createBtn = document.getElementById('create-btn');
+
+createBtn.addEventListener('click', () => {
+  // For now, show an alert. You can replace this with modal or redirect
+  alert('Create feature coming soon! This will open video upload functionality.');
+  
+  // Future implementation:
+  // - Open a modal for video upload
+  // - Or redirect to upload page: window.location.href = 'upload.html';
+});
+
+// ===== SEARCH FUNCTIONALITY =====
+const searchInput = document.querySelector('.search-input');
+const searchBtn = document.querySelector('.search-btn');
+
+// Add search icon to the left of search input
+const searchIcon = document.createElement('i');
+searchIcon.className = 'fas fa-search search-icon';
+searchInput.parentNode.insertBefore(searchIcon, searchInput);
+
+// Search functionality
+searchBtn.addEventListener('click', performSearch);
+searchInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    performSearch();
+  }
+});
+
+function performSearch() {
+  const query = searchInput.value.trim();
+  if (query) {
+    // For now, show alert. Replace with actual search implementation
+    alert(`Searching for: ${query}`);
+    
+    // Future implementation:
+    // - Redirect to search results page: window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+    // - Or fetch and display search results dynamically
+  } else {
+    searchInput.focus();
+  }
+}
+
+// ===== ENHANCED ERROR HANDLING =====
+window.addEventListener('error', function(e) {
+  console.error('Global error:', e.error);
+});
+
+// Safe element selection
+function safeSelect(selector) {
+  const element = document.querySelector(selector);
+  if (!element) {
+    console.warn(`Element not found: ${selector}`);
+  }
+  return element;
+}
