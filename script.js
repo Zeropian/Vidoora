@@ -57,16 +57,8 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ===== CREATE BUTTON FUNCTIONALITY =====
-const createBtn = document.getElementById('create-btn');
-
-createBtn.addEventListener('click', () => {
-  // For now, show an alert. You can replace this with modal or redirect
-  alert('Create feature coming soon! This will open video upload functionality.');
-  
-  // Future implementation:
-  // - Open a modal for video upload
-  // - Or redirect to upload page: window.location.href = 'upload.html';
-});
+// Note: The Create button is now an anchor tag that redirects to signin page
+// No JavaScript click handler needed as it uses href attribute
 
 // ===== SEARCH FUNCTIONALITY =====
 const searchInput = document.querySelector('.search-input');
