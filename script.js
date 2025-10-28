@@ -59,7 +59,6 @@ document.addEventListener('keydown', (e) => {
 // ===== DESKTOP SIDEBAR EXPAND/COLLAPSE =====
 const desktopSidebar = document.getElementById('desktop-sidebar');
 const sidebarToggle = document.getElementById('sidebar-toggle');
-const mainContent = document.getElementById('main-content');
 
 // Check saved sidebar state
 const savedSidebarState = localStorage.getItem('vidora-sidebar-expanded');
@@ -83,24 +82,6 @@ sidebarToggle.addEventListener('click', () => {
     desktopSidebar.classList.add('expanded');
     document.body.classList.add('sidebar-expanded');
     localStorage.setItem('vidora-sidebar-expanded', 'true');
-  }
-});
-
-// Auto-expand sidebar on hover (optional)
-desktopSidebar.addEventListener('mouseenter', () => {
-  if (window.innerWidth > 768) {
-    desktopSidebar.classList.add('expanded');
-    document.body.classList.add('sidebar-expanded');
-  }
-});
-
-desktopSidebar.addEventListener('mouseleave', () => {
-  if (window.innerWidth > 768) {
-    const isExpanded = localStorage.getItem('vidora-sidebar-expanded') === 'true';
-    if (!isExpanded) {
-      desktopSidebar.classList.remove('expanded');
-      document.body.classList.remove('sidebar-expanded');
-    }
   }
 });
 
@@ -135,15 +116,6 @@ function performSearch() {
   }
 }
 
-// ===== VIDEO CARD INTERACTIONS =====
-document.querySelectorAll('.video-card').forEach(card => {
-  card.addEventListener('click', function() {
-    // Simulate video click - in real implementation, this would open the video player
-    const videoTitle = this.querySelector('.video-title').textContent;
-    alert(`Playing: ${videoTitle}`);
-  });
-});
-
 // ===== ENHANCED ERROR HANDLING =====
 window.addEventListener('error', function(e) {
   console.error('Global error:', e.error);
@@ -161,4 +133,43 @@ function safeSelect(selector) {
 // Initialize on load
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Vidora platform loaded successfully!');
+  
+  // Check if user is authenticated and update UI accordingly
+  const isAuthenticated = localStorage.getItem('userAuthenticated');
+  const authButtons = document.querySelector('.header-right');
+  
+  if (isAuthenticated === 'true') {
+    const userEmail = localStorage.getItem('userEmail');
+    const userName = localStorage.getItem('userName') || userEmail;
+    
+    // Replace auth buttons with user avatar
+    authButtons.innerHTML = `
+      <a href="upload.html" class="btn btn-create">
+        <i class="fas fa-plus"></i>
+        <span>Create</span>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <div class="user-menu">
+        <button class="user-avatar" id="user-avatar">
+          <span>${userName.charAt(0).toUpperCase()}</span>
+        </button>
+      </div>
+    `;
+    
+    // Re-attach theme toggle event to the new button
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const currentTheme = htmlRoot.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        htmlRoot.setAttribute('data-theme', 'light');
+        document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('vidora-theme', 'light');
+      } else {
+        htmlRoot.setAttribute('data-theme', 'dark');
+        document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('vidora-theme', 'dark');
+      }
+    });
+  }
 });

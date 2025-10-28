@@ -68,7 +68,7 @@
       <!-- Library Section -->
       <div class="nav-section">
         <div class="section-label">LIBRARY</div>
-        <a href="#" class="nav-item">
+        <a href="watch-history.html" class="nav-item">
           <i class="fas fa-history"></i>
           <span class="nav-text">History</span>
         </a>
@@ -85,22 +85,11 @@
       <!-- Subscriptions Section -->
       <div class="nav-section">
         <div class="section-label">SUBSCRIPTIONS</div>
-        <a href="#" class="nav-item channel">
-          <div class="channel-avatar">C</div>
-          <span class="nav-text">Channel One</span>
-        </a>
-        <a href="#" class="nav-item channel">
-          <div class="channel-avatar">G</div>
-          <span class="nav-text">Gaming Central</span>
-        </a>
-        <a href="#" class="nav-item channel">
-          <div class="channel-avatar">T</div>
-          <span class="nav-text">Tech Reviews</span>
-        </a>
-        <a href="#" class="nav-item channel">
-          <div class="channel-avatar">M</div>
-          <span class="nav-text">Music Daily</span>
-        </a>
+        <div class="empty-subscriptions">
+          <i class="fas fa-users"></i>
+          <p>No subscriptions yet</p>
+          <span>Channels you subscribe to will appear here</span>
+        </div>
       </div>
 
       <!-- Explore Section -->
@@ -143,7 +132,7 @@
       <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
       <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
       <li><a href="#"><i class="fas fa-play-circle"></i> Subscriptions</a></li>
-      <li><a href="#"><i class="fas fa-history"></i> History</a></li>
+      <li><a href="watch-history.html"><i class="fas fa-history"></i> History</a></li>
       <li><a href="#"><i class="fas fa-clock"></i> Watch Later</a></li>
       <li><a href="#"><i class="fas fa-thumbs-up"></i> Liked Videos</a></li>
       <li><a href="upload.html"><i class="fas fa-upload"></i> Upload Video</a></li>
@@ -156,57 +145,27 @@
   <!-- Main Content -->
   <main class="main-content" id="main-content">
     <div class="content-wrapper">
-      <h1>Welcome to Vidora</h1>
-      <p>The open video platform for creators and viewers alike.</p>
-      
-      <!-- Video Grid (Placeholder) -->
-      <div class="video-grid">
-        <div class="video-card">
-          <div class="video-thumbnail">
-            <img src="https://via.placeholder.com/320x180/ff3b30/ffffff?text=Video+1" alt="Video thumbnail" />
-            <span class="video-duration">10:25</span>
-          </div>
-          <div class="video-info">
-            <h3 class="video-title">Amazing Nature Compilation 2024</h3>
-            <p class="channel-name">Nature World</p>
-            <p class="video-stats">125K views • 2 days ago</p>
-          </div>
+      <div class="welcome-section">
+        <h1>Welcome to Vidora</h1>
+        <p>The open video platform for creators and viewers alike.</p>
+        <div class="welcome-actions">
+          <a href="signup.html" class="btn btn-primary">Get Started</a>
+          <a href="signin.html" class="btn btn-outline">Sign In</a>
         </div>
-        
-        <div class="video-card">
-          <div class="video-thumbnail">
-            <img src="https://via.placeholder.com/320x180/007bff/ffffff?text=Video+2" alt="Video thumbnail" />
-            <span class="video-duration">15:42</span>
+      </div>
+
+      <!-- Empty Video Grid State -->
+      <div class="empty-video-grid">
+        <div class="empty-state">
+          <div class="empty-icon">
+            <i class="fas fa-video"></i>
           </div>
-          <div class="video-info">
-            <h3 class="video-title">Learn JavaScript in 15 Minutes</h3>
-            <p class="channel-name">Code Master</p>
-            <p class="video-stats">89K views • 1 week ago</p>
-          </div>
-        </div>
-        
-        <div class="video-card">
-          <div class="video-thumbnail">
-            <img src="https://via.placeholder.com/320x180/28a745/ffffff?text=Video+3" alt="Video thumbnail" />
-            <span class="video-duration">8:17</span>
-          </div>
-          <div class="video-info">
-            <h3 class="video-title">Morning Yoga Routine for Beginners</h3>
-            <p class="channel-name">Yoga Life</p>
-            <p class="video-stats">45K views • 3 days ago</p>
-          </div>
-        </div>
-        
-        <div class="video-card">
-          <div class="video-thumbnail">
-            <img src="https://via.placeholder.com/320x180/ffc107/000000?text=Video+4" alt="Video thumbnail" />
-            <span class="video-duration">22:35</span>
-          </div>
-          <div class="video-info">
-            <h3 class="video-title">Gaming Highlights: Best Moments</h3>
-            <p class="channel-name">Game Pro</p>
-            <p class="video-stats">210K views • 5 hours ago</p>
-          </div>
+          <h2>No videos available yet</h2>
+          <p>Be the first to upload content and start sharing your vision with the world</p>
+          <a href="signin.html?redirect=upload" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Upload Your First Video
+          </a>
         </div>
       </div>
     </div>
