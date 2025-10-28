@@ -29,36 +29,80 @@ themeToggle.addEventListener('click', () => {
 
 // ===== SIDEBAR TOGGLE =====
 const hamburger = document.getElementById('hamburger');
-const sidebar = document.getElementById('sidebar');
+const mobileSidebar = document.getElementById('mobile-sidebar');
 const closeBtn = document.getElementById('close-sidebar');
 const overlay = document.getElementById('overlay');
 
-function openSidebar() {
-  sidebar.classList.add('active');
+function openMobileSidebar() {
+  mobileSidebar.classList.add('active');
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
-function closeSidebar() {
-  sidebar.classList.remove('active');
+function closeMobileSidebar() {
+  mobileSidebar.classList.remove('active');
   overlay.classList.remove('active');
   document.body.style.overflow = '';
 }
 
-hamburger.addEventListener('click', openSidebar);
-closeBtn.addEventListener('click', closeSidebar);
-overlay.addEventListener('click', closeSidebar);
+hamburger.addEventListener('click', openMobileSidebar);
+closeBtn.addEventListener('click', closeMobileSidebar);
+overlay.addEventListener('click', closeMobileSidebar);
 
-// Close sidebar on Escape key
+// Close mobile sidebar on Escape key
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-    closeSidebar();
+  if (e.key === 'Escape' && mobileSidebar.classList.contains('active')) {
+    closeMobileSidebar();
   }
 });
 
-// ===== CREATE BUTTON FUNCTIONALITY =====
-// Note: The Create button is now an anchor tag that redirects to signin page
-// No JavaScript click handler needed as it uses href attribute
+// ===== DESKTOP SIDEBAR EXPAND/COLLAPSE =====
+const desktopSidebar = document.getElementById('desktop-sidebar');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const mainContent = document.getElementById('main-content');
+
+// Check saved sidebar state
+const savedSidebarState = localStorage.getItem('vidora-sidebar-expanded');
+
+if (savedSidebarState === 'true') {
+  desktopSidebar.classList.add('expanded');
+  document.body.classList.add('sidebar-expanded');
+} else {
+  desktopSidebar.classList.remove('expanded');
+  document.body.classList.remove('sidebar-expanded');
+}
+
+sidebarToggle.addEventListener('click', () => {
+  const isExpanded = desktopSidebar.classList.contains('expanded');
+  
+  if (isExpanded) {
+    desktopSidebar.classList.remove('expanded');
+    document.body.classList.remove('sidebar-expanded');
+    localStorage.setItem('vidora-sidebar-expanded', 'false');
+  } else {
+    desktopSidebar.classList.add('expanded');
+    document.body.classList.add('sidebar-expanded');
+    localStorage.setItem('vidora-sidebar-expanded', 'true');
+  }
+});
+
+// Auto-expand sidebar on hover (optional)
+desktopSidebar.addEventListener('mouseenter', () => {
+  if (window.innerWidth > 768) {
+    desktopSidebar.classList.add('expanded');
+    document.body.classList.add('sidebar-expanded');
+  }
+});
+
+desktopSidebar.addEventListener('mouseleave', () => {
+  if (window.innerWidth > 768) {
+    const isExpanded = localStorage.getItem('vidora-sidebar-expanded') === 'true';
+    if (!isExpanded) {
+      desktopSidebar.classList.remove('expanded');
+      document.body.classList.remove('sidebar-expanded');
+    }
+  }
+});
 
 // ===== SEARCH FUNCTIONALITY =====
 const searchInput = document.querySelector('.search-input');
@@ -91,6 +135,15 @@ function performSearch() {
   }
 }
 
+// ===== VIDEO CARD INTERACTIONS =====
+document.querySelectorAll('.video-card').forEach(card => {
+  card.addEventListener('click', function() {
+    // Simulate video click - in real implementation, this would open the video player
+    const videoTitle = this.querySelector('.video-title').textContent;
+    alert(`Playing: ${videoTitle}`);
+  });
+});
+
 // ===== ENHANCED ERROR HANDLING =====
 window.addEventListener('error', function(e) {
   console.error('Global error:', e.error);
@@ -104,3 +157,8 @@ function safeSelect(selector) {
   }
   return element;
 }
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Vidora platform loaded successfully!');
+});
