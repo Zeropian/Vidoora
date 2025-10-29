@@ -242,40 +242,6 @@
       opacity: 0.6;
     }
 
-    .history-context-menu {
-      position: absolute;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 1000;
-      min-width: 200px;
-      overflow: hidden;
-    }
-
-    .history-context-menu button {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      width: 100%;
-      padding: 0.75rem 1rem;
-      background: none;
-      border: none;
-      color: var(--text-color);
-      cursor: pointer;
-      font-size: 0.95rem;
-      text-align: left;
-    }
-
-    .history-context-menu button:hover {
-      background: var(--border-color);
-    }
-
-    .history-context-menu button i {
-      width: 16px;
-      text-align: center;
-    }
-
     .empty-state {
       text-align: center;
       padding: 4rem 2rem;
@@ -306,6 +272,14 @@
       margin-left: auto;
       margin-right: auto;
       line-height: 1.6;
+    }
+
+    .empty-sidebar-subscriptions {
+      padding: 1rem;
+      text-align: center;
+      color: var(--text-color);
+      opacity: 0.7;
+      font-size: 0.9rem;
     }
 
     @media (max-width: 768px) {
@@ -425,18 +399,12 @@
       <!-- Subscriptions Section -->
       <div class="nav-section">
         <div class="section-label">SUBSCRIPTIONS</div>
-        <a href="#" class="nav-item channel">
-          <div class="channel-avatar">C</div>
-          <span class="nav-text">Channel One</span>
-        </a>
-        <a href="#" class="nav-item channel">
-          <div class="channel-avatar">G</div>
-          <span class="nav-text">Gaming Central</span>
-        </a>
-        <a href="#" class="nav-item channel">
-          <div class="channel-avatar">T</div>
-          <span class="nav-text">Tech Reviews</span>
-        </a>
+        <div id="sidebar-subscriptions">
+          <div class="empty-sidebar-subscriptions">
+            <i class="fas fa-users" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+            <p>No subscriptions yet</p>
+          </div>
+        </div>
       </div>
 
       <!-- Explore Section -->
@@ -642,6 +610,7 @@
     const pauseHistoryBtn = document.getElementById('pause-history');
     const historySearch = document.getElementById('history-search');
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const sidebarSubscriptions = document.getElementById('sidebar-subscriptions');
 
     // Load watch history from localStorage
     function loadWatchHistory() {
@@ -659,7 +628,41 @@
         showEmptyState();
       } else {
         hideEmptyState();
-        renderHistory(history);
+        // Note: In a real app, we would render the history here
+        // But since we have no data, we'll just keep the empty state
+      }
+    }
+
+    // Load subscriptions for sidebar
+    function loadSidebarSubscriptions() {
+      const savedSubscriptions = localStorage.getItem('vidora-subscriptions');
+      let subscriptions = [];
+      
+      if (savedSubscriptions) {
+        subscriptions = JSON.parse(savedSubscriptions);
+      }
+      
+      if (subscriptions.length === 0) {
+        // Keep the empty state in sidebar
+        sidebarSubscriptions.innerHTML = `
+          <div class="empty-sidebar-subscriptions">
+            <i class="fas fa-users" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+            <p>No subscriptions yet</p>
+          </div>
+        `;
+      } else {
+        // Render subscribed channels in sidebar
+        sidebarSubscriptions.innerHTML = '';
+        subscriptions.forEach(channel => {
+          const channelItem = document.createElement('a');
+          channelItem.href = '#';
+          channelItem.className = 'nav-item channel';
+          channelItem.innerHTML = `
+            <div class="channel-avatar">${channel.avatar}</div>
+            <span class="nav-text">${channel.name}</span>
+          `;
+          sidebarSubscriptions.appendChild(channelItem);
+        });
       }
     }
 
@@ -765,6 +768,10 @@
       
       // Load watch history - will be empty
       loadWatchHistory();
+      
+      // Load subscriptions for sidebar
+      loadSidebarSubscriptions();
+      
       updatePauseButton();
     });
   </script>
